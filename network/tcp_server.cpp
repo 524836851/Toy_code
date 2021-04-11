@@ -19,7 +19,7 @@ int main(int argc,char** argv)
     // create socket
     int listen_sock = socket(AF_INET,SOCK_STREAM,0);
     struct sockaddr_in addr_ipv4;
-    bzero(&addr_ipv4,0);
+    bzero(&addr_ipv4,sizeof(addr_ipv4));
     addr_ipv4.sin_family = AF_INET;
     addr_ipv4.sin_port = htons(port);
     inet_pton(AF_INET,ip,&addr_ipv4.sin_addr);

@@ -31,10 +31,11 @@ int main(int argc,char** argv)
         exit(1);
     }
     char buffer[buffer_len];
-    int read_size;
+    int read_ret ;
     printf("waitting input:\n");
-    while ((read_size =scanf("%s",buffer))!=0){
-        if (send(client_fd,buffer,read_size,0)<0){
+    // note: Scanf donn't return str size len
+    while ((read_ret =scanf("%s",buffer))!=0){
+        if (send(client_fd,buffer,strlen(buffer),0)<0){
             printf("send failure\n");
             close(client_fd);
             exit(1);
