@@ -1,5 +1,6 @@
 #include <iostream>
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/socket.h>
 #include <sys/types.h>
 #include <unistd.h>
@@ -22,6 +23,7 @@ int main(int argc,char** argv)
 
     sockaddr_in server_addr;
     bzero(&server_addr,sizeof(server_addr));
+	server_addr.sin_family = AF_INET;
     server_addr.sin_port = htons(server_port);
     inet_pton(AF_INET,server_ip,&server_addr.sin_addr);
 
@@ -40,6 +42,7 @@ int main(int argc,char** argv)
             close(client_fd);
             exit(1);
         }
+		memset(buffer,'\0',buffer_len);
         int recv_size = recv(client_fd,buffer,buffer_len-1,0);
         if (recv_size <=0) {
             printf("recv failure\n");

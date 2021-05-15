@@ -9,8 +9,8 @@ try:
     while True:
         msg = input("input the msg\n")
         client_socket.send(msg.encode())
-        msg = client_socket.recv(2048)
-        print(msg.decode())
+        #msg = client_socket.recv(2048)
+        #print(msg.decode())
 except KeyboardInterrupt:
     client_socket.close()
     exit(0)

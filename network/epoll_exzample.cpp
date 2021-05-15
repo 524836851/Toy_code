@@ -28,7 +28,7 @@ void add_fd2epoll(int epollfd,int addfd,bool enable_et)
 {
     epoll_event event;
     event.events = EPOLLIN;
-    event.data.fd = epollfd;
+    event.data.fd = addfd;
     if (enable_et) {
         event.events |= EPOLLET;
     }
@@ -42,6 +42,8 @@ void add_fd2epoll(int epollfd,int addfd,bool enable_et)
 void et_model(epoll_event* events, int event_num,int epollfd,int listenfd)
 {
     for (int i =0;i<event_num;i++){
+		int sockfd = events[i].data.fd;
+		printf("%d\n",sockfd);
         if (events[i].data.fd == listenfd){
             printf("listen event trigger once\n");
             sockaddr_in client_address;
@@ -86,6 +88,8 @@ void et_model(epoll_event* events, int event_num,int epollfd,int listenfd)
 
 void lt_model(epoll_event* events,int events_num,int epollfd,int listenfd){
     for (int i =0;i<events_num;i++){
+		int sockfd = events[i].data.fd;
+		printf("%d\n",sockfd);
         if (events[i].data.fd == listenfd){
             printf("listen event trigger once\n");
             sockaddr_in client_address;
@@ -131,8 +135,9 @@ int main(int argc,char* argv[])
     inet_pton(AF_INET,argv[1],&server_ip.sin_addr);
     server_ip.sin_port = htons(port_number);
 
-    int listen_sock = socket(PF_INET,SOCK_STREAM,0);
-    
+    int listen_sock = socket(AF_INET,SOCK_STREAM,0);
+	printf("listen sock is %d\n",listen_sock);
+
     ret  = bind(listen_sock,(sockaddr*)(&server_ip),sizeof(server_ip));
 
     ret = listen(listen_sock,5);

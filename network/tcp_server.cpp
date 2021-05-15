@@ -1,7 +1,9 @@
 #include <iostream>
+#include <stdio.h>
 #include <string.h>
 #include <arpa/inet.h>
 #include <unistd.h>
+#include <stdlib.h>
 #include <netinet/in.h>
 #include <sys/socket.h>
 #include <sys/types.h>
@@ -46,6 +48,7 @@ int main(int argc,char** argv)
         char temp[INET_ADDRSTRLEN];
         printf("connetct with ip:%s port:%d\n",inet_ntop(client_addr.sin_family,&client_addr.sin_addr,temp,INET6_ADDRSTRLEN),ntohs(client_addr.sin_port));
         char buffer[buffer_len];
+		memset(buffer,'\0',buffer_len);
         int recv_ret;
         while ((recv_ret = recv(connect_fd,buffer,buffer_len-1,0))>0){
             printf("recv message:%s\n",buffer);
@@ -59,6 +62,7 @@ int main(int argc,char** argv)
                 printf("send failure\n");
                 break;
             }
+			memset(buffer,'\0',buffer_len);
         }
         close(connect_fd);
         printf("watiting accept next connet...\n");
