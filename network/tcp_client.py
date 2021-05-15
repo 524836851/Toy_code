@@ -4,7 +4,7 @@ from socket import *
 
 
 client_socket = socket(AF_INET,SOCK_STREAM)
-client_socket.connect(('localhost',12000))
+client_socket.connect(('127.0.0.1',2333))
 try:
     while True:
         msg = input("input the msg\n")
